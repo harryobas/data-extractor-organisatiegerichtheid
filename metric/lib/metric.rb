@@ -1,4 +1,5 @@
 require "metric/version"
+require "metric/extractor"
 
 module Metric
   class Error < StandardError; end
