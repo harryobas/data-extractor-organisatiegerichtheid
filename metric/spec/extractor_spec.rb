@@ -29,7 +29,13 @@ RSpec.describe  Metric::Extractor do
         extractor = Metric::Extractor.new(file)
         expect(extractor.extract_metric).to eq nil
       end
-
+    end
+    context "when competenties key value of parsed json string is an Array" do
+      it "returns an organisatiegerichtheid metric" do
+        file = File.expand_path("spec/fixtures/candidate_8cb1fd_test_results.json")
+        extractor = Metric::Extractor.new(file)
+        expect(extractor.extract_metric).to be_a(Metric::Organisatiegerichtheid)
+      end
     end
   end
 

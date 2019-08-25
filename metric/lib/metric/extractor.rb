@@ -22,13 +22,30 @@ module Metric
     private
 
     def get_organisatiegerichtheid(data)
-      extracted_data = data["competenties"]["organisatiegerichtheid"]
+      if data["competenties"].is_a? Array
+        return handle_array_structure(data["competenties"])
+      end
+      @extracted_data = data["competenties"]["organisatiegerichtheid"]
       metric = Metric::Organisatiegerichtheid.new
-      metric.organisatiesensitiviteit = extracted_data["organisatiesensitiviteit"]
-      metric.klantorientatie = extracted_data["klantorientatie"]
-      metric.kwaliteitsgerichtheid = extracted_data["kwaliteitsgerichtheid"]
-      metric.ondernemerschap = extracted_data["ondernemerschap"]
+      metric.organisatiesensitiviteit = @extracted_data["organisatiesensitiviteit"]
+      metric.klantorientatie = @extracted_data["klantorientatie"]
+      metric.kwaliteitsgerichtheid = @extracted_data["kwaliteitsgerichtheid"]
+      metric.ondernemerschap = @extracted_data["ondernemerschap"]
       return metric
+    end
+
+    def handle_array_structure(data)
+      data.each do |d|
+        if d["competentie"].has_key?("organisatiegerichtheid")
+          @extracted_data = d["competentie"]["organisatiegerichtheid"]
+          metric = Metric::Organisatiegerichtheid.new
+          metric.organisatiesensitiviteit = @extracted_data["organisatiesensitiviteit"]
+          metric.klantorientatie = @extracted_data["klantorientatie"]
+          metric.kwaliteitsgerichtheid = @extracted_data["kwaliteitsgerichtheid"]
+          metric.ondernemerschap = @extracted_data["ondernemerschap"]
+          return metric
+        end
+      end
     end
   end
 end
