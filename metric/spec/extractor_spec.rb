@@ -9,10 +9,19 @@ RSpec.describe  Metric::Extractor do
     end
   end
   describe "#extract_metric" do
-    it "returns an organisatiegerichtheid metric " do
-      file = File.expand_path("spec/fixtures/candidate_0a0cc1_test_results.json")
-      extractor = Metric::Extractor.new(file)
-      expect(extractor.extract_metric).to be_a(Metric::Organisatiegerichtheid)
+    context "with valid file path" do
+      it "returns an organisatiegerichtheid metric " do
+        file = File.expand_path("spec/fixtures/candidate_0a0cc1_test_results.json")
+        extractor = Metric::Extractor.new(file)
+        expect(extractor.extract_metric).to be_a(Metric::Organisatiegerichtheid)
+      end
+    end
+    context "with invalid file path" do
+      it "returns nil" do
+        file = File.expand_path("spec/fixtures/results.json")
+        extractor = Metric::Extractor.new(file)
+        expect(extractor.extract_metric).to eq nil   
+      end
     end
   end
 

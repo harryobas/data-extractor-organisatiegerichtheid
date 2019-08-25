@@ -12,19 +12,15 @@ module Metric
     def extract_metric
       begin
         json = File.read(file)
-      rescue  Errno::ENOENT
+        data = JSON.parse.(json)
+        get_organisatiegerichtheid(data)
+      rescue Errno::ENOENT => e
         nil
       end
-
-      begin
-        data = JSON.parse(json)
-      rescue JSON::JSONError
-        {}
-      end
-      get_organisatiegerichtheid(data)
     end
 
     private
+
     def get_organisatiegerichtheid(data)
       extracted_data = data["competenties"]["organisatiegerichtheid"]
       metric = Metric::Organisatiegerichtheid.new
