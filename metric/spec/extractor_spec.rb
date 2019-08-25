@@ -20,8 +20,16 @@ RSpec.describe  Metric::Extractor do
       it "returns nil" do
         file = File.expand_path("spec/fixtures/results.json")
         extractor = Metric::Extractor.new(file)
-        expect(extractor.extract_metric).to eq nil   
+        expect(extractor.extract_metric).to eq nil
       end
+    end
+    context "file content is not a json structured string" do
+      it "returns nil" do
+        file = File.expand_path("spec/fixtures/non-json.rtf")
+        extractor = Metric::Extractor.new(file)
+        expect(extractor.extract_metric).to eq nil
+      end
+
     end
   end
 
