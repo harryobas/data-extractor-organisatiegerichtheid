@@ -21,7 +21,7 @@ Or install it yourself as:
 
 ## Usage
 
-'''ruby
+```ruby
 require 'metric'
 extractor = Metric::Extractor.new("file.json")
 metric = extractor.extract_metric
@@ -30,7 +30,7 @@ metric.organisatiesensitiviteit
 metric.klantorientatie
 metric.kwaliteitsgerichtheid
 metric.ondernemerschap
-'''
+```
 
 ## Development
 
